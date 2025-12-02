@@ -1,0 +1,36 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+env/
+venv/
+*.log
+.DS_Store
+Thumbs.db
+
+# Large data files that should not be deployed
+hotel_bookings.csv
+processed_reservations.csv
+
+# Additional Python files
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints
+
+# Temporary files
+*.tmp
+*.temp

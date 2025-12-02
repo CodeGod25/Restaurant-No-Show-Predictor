@@ -1,0 +1,58 @@
+/* Result Content Styling */
+.result-content {
+  display: grid;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f8f8f8;
+  border: var(--brutal-border);
+  font-family: var(--mono-font);
+}
+
+.result-label {
+  font-weight: bold;
+  color: var(--brutal-black);
+  font-size: 14px;
+}
+
+.result-value {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--brutal-black);
+}
+
+.result-value.low {
+  color: var(--brutal-green);
+}
+
+.result-value.moderate {
+  color: #d4a000;
+}
+
+.result-value.critical {
+  color: var(--brutal-red);
+}
+
+.probability-low {
+  color: var(--brutal-green) !important;
+}
+
+.probability-moderate {
+  color: #d4a000 !important;
+}
+
+.probability-critical {
+  color: var(--brutal-red) !important;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

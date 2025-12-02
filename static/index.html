@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoSQL Project</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/main2.css">
+    <link rel="stylesheet" href="/static/css/result-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">RESTAURANT_PRED</span>
+                <span class="logo-bracket">]</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="home">HOME</button>
+                <button class="nav-btn" data-section="predict">PREDICT</button>
+                <button class="nav-btn" data-section="history">HISTORY</button>
+                <button class="nav-btn" data-section="mongodb">MONGODB</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">★ LIVE ML SYSTEM ★</div>
+                <h1 class="hero-title">
+                    <span class="title-main">RESTAURANT</span>
+                    <span class="title-sub">NO-SHOW</span>
+                    <span class="title-main">PREDICTOR</span>
+                </h1>
+                <div class="hero-desc">
+                    <p class="desc-line">// BUILT WITH MONGODB ATLAS</p>
+                    <p class="desc-line">// POWERED BY XGBOOST ML</p>
+                    <p class="desc-line">// REAL-TIME PREDICTIONS</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">[PREDICTIONS]</div>
+                        <div class="stat-value" id="totalPredictions">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">[ACCURACY]</div>
+                        <div class="stat-value">94.2%</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">[DB_STATUS]</div>
+                        <div class="stat-value" id="dbStatus">ONLINE</div>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <button class="cta-btn primary" onclick="scrollToSection('predict')">
+                        RUN_PREDICTION()
+                    </button>
+                    <button class="cta-btn secondary" onclick="scrollToSection('mongodb')">
+                        VIEW_DATABASE()
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Section -->
+    <section id="predict" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">[PREDICTION_ENGINE]</h2>
+                <div class="section-subtitle">// INPUT RESERVATION DATA TO PREDICT NO-SHOW PROBABILITY</div>
+            </div>
+            
+            <div class="prediction-layout">
+                <div class="form-container">
+                    <div class="form-header">
+                        <span class="form-title">CUSTOMER_DATA.JSON</span>
+                        <div class="form-status">● READY</div>
+                    </div>
+                    
+                    <form class="brutal-form" id="predictionForm">
+                        <div class="input-row">
+                            <label class="input-label">CUSTOMER_NAME:</label>
+                            <input type="text" id="customerName" name="customer_name" class="brutal-input" placeholder="enter_name_here" required>
+                        </div>
+                        
+                        <div class="input-grid">
+                            <div class="input-col">
+                                <label class="input-label">PARTY_SIZE:</label>
+                                <input type="number" id="partySize" name="party_size" class="brutal-input" min="1" max="20" placeholder="0" required>
+                            </div>
+                            <div class="input-col">
+                                <label class="input-label">LEAD_TIME_DAYS:</label>
+                                <input type="number" id="leadTime" name="lead_time_days" class="brutal-input" min="0" max="365" placeholder="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-grid">
+                            <div class="input-col">
+                                <label class="input-label">DEPOSIT_PAID:</label>
+                                <select id="depositPaid" name="deposit_paid" class="brutal-select" required>
+                                    <option value="">SELECT_OPTION</option>
+                                    <option value="1">TRUE</option>
+                                    <option value="0">FALSE</option>
+                                </select>
+                            </div>
+                            <div class="input-col">
+                                <label class="input-label">REPEATED_GUEST:</label>
+                                <select id="repeatedGuest" name="is_repeated_guest" class="brutal-select" required>
+                                    <option value="">SELECT_OPTION</option>
+                                    <option value="1">TRUE</option>
+                                    <option value="0">FALSE</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-grid">
+                            <div class="input-col">
+                                <label class="input-label">PREV_CANCELLATIONS:</label>
+                                <input type="number" id="prevCancellations" name="previous_cancellations" class="brutal-input" min="0" max="50" placeholder="0" required>
+                            </div>
+                            <div class="input-col">
+                                <label class="input-label">SPECIAL_REQUESTS:</label>
+                                <input type="number" id="specialRequests" name="special_requests_count" class="brutal-input" min="0" max="10" placeholder="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <label class="input-label">VISIT_MONTH:</label>
+                            <select id="visitMonth" name="visit_month" class="brutal-select" required>
+                                <option value="">SELECT_MONTH</option>
+                                <option value="1">01_JANUARY</option>
+                                <option value="2">02_FEBRUARY</option>
+                                <option value="3">03_MARCH</option>
+                                <option value="4">04_APRIL</option>
+                                <option value="5">05_MAY</option>
+                                <option value="6">06_JUNE</option>
+                                <option value="7">07_JULY</option>
+                                <option value="8">08_AUGUST</option>
+                                <option value="9">09_SEPTEMBER</option>
+                                <option value="10">10_OCTOBER</option>
+                                <option value="11">11_NOVEMBER</option>
+                                <option value="12">12_DECEMBER</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="execute-btn">
+                            <span class="btn-icon">►</span>
+                            <span class="btn-text">EXECUTE_PREDICTION()</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="result-panel" id="resultCard" style="display: none;">
+                    <div class="panel-header">
+                        <span class="panel-title">PREDICTION_OUTPUT.JSON</span>
+                        <div class="panel-status" id="riskBadge">PROCESSING...</div>
+                    </div>
+                    
+                    <div class="result-display">
+                        <div class="result-content">
+                            <div class="result-item">
+                                <span class="result-label">PROBABILITY:</span>
+                                <span class="result-value" id="probabilityValue">0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">RISK_LEVEL:</span>
+                                <span class="result-value" id="riskValue">LOW</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">STATUS:</span>
+                                <span class="result-value">PREDICTION_COMPLETE</span>
+                            </div>
+                        </div>
+                        
+                        <div class="risk-meter">
+                            <div class="meter-label">RISK_VISUALIZATION:</div>
+                            <div class="meter-bar">
+                                <div class="meter-fill" id="meterFill"></div>
+                                <div class="meter-value" id="meterValue">0%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="insights-container" id="businessInsights"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">[PREDICTION_HISTORY]</h2>
+                <div class="section-subtitle">// RECENT PREDICTIONS FROM MONGODB</div>
+                <div class="prediction-count" id="predictionCount">LOADING...</div>
+            </div>
+            <div class="history-controls">
+                <button class="refresh-button" onclick="loadPredictionHistory()">
+                    <span>⟳</span>
+                    REFRESH_DATA
+                </button>
+            </div>
+            <div class="history-grid" id="historyGrid">
+                <div class="loading-spinner">
+                    <span>LOADING_PREDICTIONS...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MongoDB Section -->
+    <section id="mongodb" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">[MONGODB_ATLAS_DB]</h2>
+                <div class="section-subtitle">// NOSQL DATABASE OPERATIONS & STATS</div>
+            </div>
+            <div class="mongodb-showcase">
+                <div class="db-card">
+                    <div class="db-header">
+                        <h3>DATABASE_CONNECTION</h3>
+                        <div class="status-indicator" id="mongoStatus"></div>
+                    </div>
+                    <div class="db-content">
+                        <div class="connection-info">
+                            <p><strong>CLUSTER:</strong> restaurant-booking-cluster</p>
+                            <p><strong>DATABASE:</strong> restaurant_db</p>
+                            <p><strong>COLLECTION:</strong> predictions</p>
+                            <p><strong>TYPE:</strong> MongoDB Atlas</p>
+                        </div>
+                        <button class="test-connection" onclick="testConnection()">
+                            <span>●</span>
+                            TEST_CONNECTION
+                        </button>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <div class="db-header">
+                        <h3>COLLECTION_STATS</h3>
+                    </div>
+                    <div class="db-content">
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="totalDocuments">-</span>
+                                <span class="stat-name">DOCUMENTS</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="avgRisk">-</span>
+                                <span class="stat-name">AVG_RISK</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="highRiskCount">-</span>
+                                <span class="stat-name">HIGH_RISK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="db-card full-width">
+                    <div class="db-header">
+                        <h3>DOCUMENT_SCHEMA.JSON</h3>
+                    </div>
+                    <div class="db-content">
+                        <pre class="json-preview" id="sampleDocument">{
+  "_id": "ObjectId('674123456789abcdef012345')",
+  "customer_name": "JOHN_DOE",
+  "party_size": 4,
+  "deposit_paid": 1,
+  "lead_time_days": 15,
+  "is_repeated_guest": 0,
+  "previous_cancellations": 0,
+  "special_requests_count": 2,
+  "visit_month": 8,
+  "prediction_prob": 0.234,
+  "risk_level": "LOW",
+  "timestamp": "2025-11-24T10:30:00Z",
+  "business_insights": {
+    "revenue_impact": {
+      "potential_revenue": 180.00,
+      "potential_loss": 42.12,
+      "risk_percentage": 23.4
+    },
+    "cost_optimization": {
+      "prep_waste_avoided": 7.49,
+      "staff_savings": 0.00,
+      "total_savings": 7.49
+    },
+    "operational_recommendations": {
+      "overbooking": "LOW_RISK - Follow standard policy",
+      "staffing": "Maintain full staffing",
+      "food_prep": "Prepare full portions"
+    }
+  }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/api.js"></script>
+</body>
+</html>

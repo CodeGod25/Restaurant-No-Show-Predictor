@@ -1,0 +1,118 @@
+/* Load More Button and Scrolling */
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+  grid-column: 1 / -1;
+}
+
+.load-more-btn {
+  background: var(--brutal-blue);
+  color: var(--brutal-white);
+  border: var(--brutal-border);
+  padding: 15px 30px;
+  font-family: var(--mono-font);
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 0px var(--brutal-black);
+}
+
+.load-more-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--brutal-black);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Header Right Styling */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Result Content Styling */
+.result-content {
+  display: grid;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f8f8f8;
+  border: var(--brutal-border);
+  font-family: var(--mono-font);
+}
+
+.result-label {
+  font-weight: bold;
+  color: var(--brutal-black);
+  font-size: 14px;
+}
+
+.result-value {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--brutal-black);
+}
+
+.result-value.low {
+  color: var(--brutal-green);
+}
+
+.result-value.moderate {
+  color: #d4a000;
+}
+
+.result-value.critical {
+  color: var(--brutal-red);
+}
+
+.probability-low {
+  color: var(--brutal-green) !important;
+}
+
+.probability-moderate {
+  color: #d4a000 !important;
+}
+
+.probability-critical {
+  color: var(--brutal-red) !important;
+}
+
+/* Scrollbar Styling */
+#historyGrid {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--brutal-blue) var(--brutal-white);
+}
+
+#historyGrid::-webkit-scrollbar {
+  width: 8px;
+}
+
+#historyGrid::-webkit-scrollbar-track {
+  background: var(--brutal-white);
+  border: 2px solid var(--brutal-black);
+}
+
+#historyGrid::-webkit-scrollbar-thumb {
+  background: var(--brutal-blue);
+  border: 1px solid var(--brutal-black);
+}
+
+#historyGrid::-webkit-scrollbar-thumb:hover {
+  background: var(--brutal-cyan);
+}
